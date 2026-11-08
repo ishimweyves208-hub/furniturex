@@ -1,0 +1,60 @@
+{
+  "name": "furniturex",
+  "version": "1.0.0",
+  "private": true,
+  "description": "FurnitureX — premium multi-vendor furniture marketplace",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "seed": "tsx scripts/seed.ts",
+    "create-superadmin": "tsx scripts/create-superadmin.ts",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "3.1163.0",
+    "@aws-sdk/s3-request-presigner": "3.1163.0",
+    "@hookform/resolvers": "5.2.2",
+    "@opennextjs/cloudflare": "^1.20.16",
+    "bcryptjs": "3.0.3",
+    "clsx": "2.1.1",
+    "date-fns": "4.4.0",
+    "lucide-react": "1.70.0",
+    "mongoose": "^9.12.0",
+    "next": "15.5.29",
+    "react": "19.1.10",
+    "react-dom": "19.1.10",
+    "react-hook-form": "7.91.0",
+    "react-is": "19.1.10",
+    "recharts": "3.10.1",
+    "tailwind-merge": "3.7.0",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "3.3.7",
+    "@playwright/test": "1.65.0",
+    "@types/node": "22.20.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "autoprefixer": "10.6.2",
+    "eslint": "9.39.2",
+    "eslint-config-next": "15.5.29",
+    "mongodb-memory-server": "11.3.0",
+    "postcss": "8.5.32",
+    "tailwindcss": "3.4.19",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3",
+    "vitest": "5.1.0",
+    "wrangler": "^4.158.0"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}
