@@ -40,23 +40,25 @@ export default async function AdminReportsPage({ searchParams }: { searchParams:
         <p className="mt-2 text-sm text-muted">Export marketplace data for finance, catalogue and growth analysis.</p>
       </div>
 
-      <form method="get" className="mt-6 flex flex-wrap items-end gap-2">
-        <div>
+      <form method="get" className="mt-6 grid gap-3 sm:flex sm:flex-wrap sm:items-end sm:gap-2">
+        <div className="sm:w-auto">
           <label htmlFor="type" className="form-label">Report</label>
-          <select id="type" name="type" defaultValue={type} className="border border-line bg-white px-3 py-2 text-sm">
+          <select id="type" name="type" defaultValue={type} className="w-full border border-line bg-white px-3 py-2 text-sm sm:w-auto">
             {REPORT_TYPES.map((value) => (<option key={value} value={value}>{value}</option>))}
           </select>
         </div>
-        <div>
-          <label htmlFor="from" className="form-label">From</label>
-          <input id="from" type="date" name="from" defaultValue={from} className="border border-line bg-white px-3 py-2 text-sm" />
+        <div className="grid grid-cols-2 gap-2 sm:contents">
+          <div>
+            <label htmlFor="from" className="form-label">From</label>
+            <input id="from" type="date" name="from" defaultValue={from} className="w-full border border-line bg-white px-3 py-2 text-sm sm:w-auto" />
+          </div>
+          <div>
+            <label htmlFor="to" className="form-label">To</label>
+            <input id="to" type="date" name="to" defaultValue={to} className="w-full border border-line bg-white px-3 py-2 text-sm sm:w-auto" />
+          </div>
         </div>
-        <div>
-          <label htmlFor="to" className="form-label">To</label>
-          <input id="to" type="date" name="to" defaultValue={to} className="border border-line bg-white px-3 py-2 text-sm" />
-        </div>
-        <button type="submit" className={buttonClasses("outline", "sm")}>Run report</button>
-        <a href={`/api/admin/reports?${exportParams.toString()}`} className={buttonClasses("primary", "sm")}>
+        <button type="submit" className={buttonClasses("outline", "sm", "justify-center")}>Run report</button>
+        <a href={`/api/admin/reports?${exportParams.toString()}`} className={buttonClasses("primary", "sm", "justify-center")}>
           <Download className="h-4 w-4" /> Export CSV
         </a>
       </form>

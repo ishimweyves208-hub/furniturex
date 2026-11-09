@@ -13,7 +13,13 @@ export function DashboardNav({
 }) {
   const pathname = usePathname();
   return (
-    <nav className={cn("space-y-0.5", className)}>
+    <nav
+      className={cn(
+        "flex gap-1 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+        "lg:block lg:space-y-0.5 lg:overflow-visible lg:pb-0",
+        className,
+      )}
+    >
       {items.map((item) => {
         const active =
           item.href === "/account" || item.href === "/seller" || item.href === "/admin"
@@ -24,7 +30,7 @@ export function DashboardNav({
             key={item.href}
             href={item.href}
             className={cn(
-              "flex items-center justify-between rounded-lg px-3 py-2 text-sm transition-colors",
+              "flex shrink-0 items-center justify-between gap-2 whitespace-nowrap rounded-lg px-3 py-2 text-sm transition-colors lg:w-full",
               active
                 ? "bg-primary text-white"
                 : "text-text-secondary hover:bg-primary-soft hover:text-primary",

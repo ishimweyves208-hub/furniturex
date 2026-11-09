@@ -16,7 +16,7 @@ export default async function SellerOverviewPage() {
   const metric = (label: string) => overview.metrics.find((entry) => entry.label === label)?.value ?? "0";
 
   return (
-    <div className="container py-8">
+    <div>
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wide text-text-secondary">Seller studio</p>

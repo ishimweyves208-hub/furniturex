@@ -46,24 +46,48 @@ export default async function SellerProductsPage({ searchParams }: { searchParam
         <Alert tone="success" className="mt-5">{notices[params.notice]}</Alert>
       ) : null}
 
-      <form method="get" className="mt-6 flex flex-wrap gap-2">
+      <form method="get" className="mt-6 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
         <input
           name="q"
           defaultValue={q}
           placeholder="Search listings"
-          className="min-w-[12rem] flex-1 border border-line bg-white px-3 py-2 text-sm"
+          className="w-full border border-line bg-white px-3 py-2 text-sm sm:min-w-[12rem] sm:flex-1"
         />
-        <select name="status" defaultValue={status ?? ""} className="border border-line bg-white px-3 py-2 text-sm">
+        <select name="status" defaultValue={status ?? ""} className="w-full border border-line bg-white px-3 py-2 text-sm sm:w-auto">
           <option value="">All statuses</option>
           {PRODUCT_STATUSES.map((value) => (
             <option key={value} value={value}>{value}</option>
           ))}
         </select>
-        <button type="submit" className={buttonClasses("outline", "sm")}>Filter</button>
+        <button type="submit" className={buttonClasses("outline", "sm", "justify-center")}>Filter</button>
       </form>
 
       {result.items.length > 0 ? (
-        <div className="mt-6 overflow-x-auto border border-line bg-white">
+        <>
+          <div className="mt-6 space-y-3 md:hidden">
+            {result.items.map((product) => (
+              <div key={product.id} className="border border-line bg-white p-4">
+                <div className="flex items-start gap-3">
+                  <div className="relative h-16 w-14 shrink-0 overflow-hidden bg-sand">
+                    {product.primaryImage ? <Image src={product.primaryImage} alt={product.name} fill sizes="56px" className="object-cover" /> : null}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <Link href={`/seller/products/${product.id}/edit`} className="line-clamp-2 font-medium hover:underline">{product.name}</Link>
+                    <p className="mt-1 text-sm font-medium">{formatCurrency(product.priceCents)}</p>
+                    <p className="text-xs text-muted">Stock {product.stock} · {product.viewCount.toLocaleString()} views</p>
+                  </div>
+                  <Badge tone={product.status}>{product.status}</Badge>
+                </div>
+                {product.moderationReason && product.status === "rejected" ? (
+                  <p className="mt-2 text-[11px] text-danger">{product.moderationReason}</p>
+                ) : null}
+                <div className="mt-3 border-t border-line pt-3">
+                  <ProductActions productId={product.id} productName={product.name} status={product.status} />
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-6 hidden overflow-x-auto border border-line bg-white md:block">
           <table className="w-full min-w-[46rem] text-left text-sm">
             <thead className="border-b border-line text-[10px] uppercase tracking-[0.12em] text-muted">
               <tr>
@@ -108,6 +132,7 @@ export default async function SellerProductsPage({ searchParams }: { searchParam
             </tbody>
           </table>
         </div>
+        </>
       ) : (
         <EmptyState
           className="mt-6"

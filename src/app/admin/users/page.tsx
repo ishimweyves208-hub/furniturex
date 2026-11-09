@@ -29,21 +29,42 @@ export default async function AdminUsersPage({ searchParams }: { searchParams: S
         <p className="mt-2 text-sm text-muted">{result.total} account{result.total === 1 ? "" : "s"} on the platform.</p>
       </div>
 
-      <form method="get" className="mt-6 flex flex-wrap gap-2">
-        <input name="q" defaultValue={q} placeholder="Search name, email or shop" className="min-w-[14rem] flex-1 border border-line bg-white px-3 py-2 text-sm" />
-        <select name="role" defaultValue={role ?? ""} className="border border-line bg-white px-3 py-2 text-sm">
+      <form method="get" className="mt-6 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+        <input name="q" defaultValue={q} placeholder="Search name, email or shop" className="w-full border border-line bg-white px-3 py-2 text-sm sm:min-w-[14rem] sm:flex-1" />
+        <select name="role" defaultValue={role ?? ""} className="w-full border border-line bg-white px-3 py-2 text-sm sm:w-auto">
           <option value="">All roles</option>
           {USER_ROLES.map((value) => (<option key={value} value={value}>{value}</option>))}
         </select>
-        <select name="status" defaultValue={status ?? ""} className="border border-line bg-white px-3 py-2 text-sm">
+        <select name="status" defaultValue={status ?? ""} className="w-full border border-line bg-white px-3 py-2 text-sm sm:w-auto">
           <option value="">All statuses</option>
           {ACCOUNT_STATUSES.map((value) => (<option key={value} value={value}>{value}</option>))}
         </select>
-        <button type="submit" className={buttonClasses("outline", "sm")}>Filter</button>
+        <button type="submit" className={buttonClasses("outline", "sm", "justify-center")}>Filter</button>
       </form>
 
       {result.items.length > 0 ? (
-        <div className="mt-6 overflow-x-auto border border-line bg-white">
+        <>
+          <div className="mt-6 space-y-3 md:hidden">
+            {result.items.map((user) => (
+              <div key={user.id} className="border border-line bg-white p-4">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="truncate font-medium">{user.name}</p>
+                    <p className="truncate text-xs text-muted">{user.email}</p>
+                    {user.shopName ? <p className="truncate text-xs text-muted">Shop: {user.shopName}</p> : null}
+                  </div>
+                  <Link href={`/admin/users/${user.id}`} className={buttonClasses("ghost", "sm")}>Open</Link>
+                </div>
+                <div className="mt-3 flex flex-wrap items-center gap-2">
+                  <Badge tone="default">{user.role}</Badge>
+                  <Badge tone={user.accountStatus}>{user.accountStatus}</Badge>
+                  {user.sellerStatus ? <Badge tone={user.sellerStatus}>{user.sellerStatus}</Badge> : null}
+                  <span className="ml-auto text-[11px] text-muted">Joined {formatDate(user.createdAt)}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-6 hidden overflow-x-auto border border-line bg-white md:block">
           <table className="w-full min-w-[44rem] text-left text-sm">
             <thead className="border-b border-line text-[10px] uppercase tracking-[0.12em] text-muted">
               <tr>
@@ -76,6 +97,7 @@ export default async function AdminUsersPage({ searchParams }: { searchParams: S
             </tbody>
           </table>
         </div>
+        </>
       ) : (
         <EmptyState className="mt-6" icon={<Users className="h-7 w-7" />} title="No users found" description="Try changing the filters." />
       )}

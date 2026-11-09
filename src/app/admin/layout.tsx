@@ -33,33 +33,35 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   return (
     <div className="min-h-screen bg-bg-alternate">
       <header className="border-b border-border bg-background">
-        <div className="container flex h-16 items-center justify-between gap-4">
-          <div className="flex items-center gap-6">
-            <Logo />
+        <div className="container flex h-14 items-center justify-between gap-2 sm:h-16 sm:gap-4">
+          <div className="flex min-w-0 items-center gap-3 sm:gap-6">
+            <Logo className="shrink-0" />
             <span className="hidden items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-primary sm:inline-flex">
               <ShieldCheck className="h-3.5 w-3.5" /> Administration
             </span>
           </div>
-          <div className="flex items-center gap-4 text-xs">
-            <Link href="/marketplace" className="hidden items-center gap-1 text-text-secondary hover:text-text-primary sm:inline-flex">
+          <div className="flex shrink-0 items-center gap-1 text-xs sm:gap-4">
+            <Link href="/marketplace" className="hidden items-center gap-1 text-text-secondary hover:text-text-primary md:inline-flex">
               <Store className="h-3.5 w-3.5" /> Marketplace
             </Link>
-            <Link href="/account" className="inline-flex items-center gap-1 text-text-secondary hover:text-text-primary">
-              <UserRound className="h-3.5 w-3.5" /> Account
+            <Link href="/account" className="inline-flex items-center gap-1 text-text-secondary hover:text-text-primary" aria-label="Account settings">
+              <UserRound className="h-3.5 w-3.5" /> <span className="hidden sm:inline">Account</span>
             </Link>
-            <SignOutButton className="w-auto px-0 text-xs text-text-secondary hover:bg-transparent hover:text-text-primary" variant="ghost" />
+            <SignOutButton className="w-auto px-2 text-xs text-text-secondary hover:bg-transparent hover:text-text-primary" variant="ghost" />
           </div>
         </div>
       </header>
 
-      <div className="container py-6 sm:py-8">
-        <div className="grid gap-6 lg:grid-cols-[14rem_1fr] lg:gap-10">
-          <aside>
-            <div className="rounded-xl border border-border bg-background p-4">
-              <p className="text-xs font-semibold uppercase tracking-wide text-primary">Superadmin</p>
-              <p className="mt-1 text-base font-semibold text-text-primary">{user.name}</p>
-              <p className="mt-0.5 truncate text-xs text-text-secondary">{user.email}</p>
-              <div className="mt-4 border-t border-border pt-4">
+      <div className="container py-5 sm:py-8">
+        <div className="grid gap-5 lg:grid-cols-[14rem_1fr] lg:gap-10">
+          <aside className="min-w-0">
+            <div className="rounded-xl border border-border bg-background p-3 sm:p-4">
+              <div className="min-w-0">
+                <p className="text-xs font-semibold uppercase tracking-wide text-primary">Superadmin</p>
+                <p className="mt-1 truncate text-base font-semibold text-text-primary">{user.name}</p>
+                <p className="mt-0.5 truncate text-xs text-text-secondary">{user.email}</p>
+              </div>
+              <div className="mt-3 border-t border-border pt-3 sm:mt-4 sm:pt-4">
                 <DashboardNav items={items} />
               </div>
             </div>

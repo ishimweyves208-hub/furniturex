@@ -31,17 +31,39 @@ export default async function AdminProductsPage({ searchParams }: { searchParams
         <p className="mt-2 text-sm text-muted">{result.total} listing{result.total === 1 ? "" : "s"} across the marketplace.</p>
       </div>
 
-      <form method="get" className="mt-6 flex flex-wrap gap-2">
-        <input name="q" defaultValue={q} placeholder="Search products" className="min-w-[12rem] flex-1 border border-line bg-white px-3 py-2 text-sm" />
-        <select name="status" defaultValue={status ?? ""} className="border border-line bg-white px-3 py-2 text-sm">
+      <form method="get" className="mt-6 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+        <input name="q" defaultValue={q} placeholder="Search products" className="w-full border border-line bg-white px-3 py-2 text-sm sm:min-w-[12rem] sm:flex-1" />
+        <select name="status" defaultValue={status ?? ""} className="w-full border border-line bg-white px-3 py-2 text-sm sm:w-auto">
           <option value="">All statuses</option>
           {PRODUCT_STATUSES.map((value) => (<option key={value} value={value}>{value}</option>))}
         </select>
-        <button type="submit" className={buttonClasses("outline", "sm")}>Filter</button>
+        <button type="submit" className={buttonClasses("outline", "sm", "justify-center")}>Filter</button>
       </form>
 
       {result.items.length > 0 ? (
-        <div className="mt-6 overflow-x-auto border border-line bg-white">
+        <>
+          <div className="mt-6 space-y-3 md:hidden">
+            {result.items.map((product) => (
+              <div key={product.id} className="border border-line bg-white p-4">
+                <div className="flex items-start gap-3">
+                  <div className="relative h-16 w-14 shrink-0 overflow-hidden bg-sand">
+                    {product.primaryImage ? <Image src={product.primaryImage} alt={product.name} fill sizes="56px" className="object-cover" /> : null}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="line-clamp-2 font-medium">{product.name}</p>
+                    <p className="mt-1 truncate text-xs text-muted">{product.seller?.shopName ?? "—"} · {product.category?.name ?? "—"}</p>
+                    <p className="mt-1 text-sm font-medium">{formatCurrency(product.priceCents)}</p>
+                  </div>
+                </div>
+                <div className="mt-3 flex flex-wrap items-center gap-2">
+                  <Badge tone={product.status}>{product.status}</Badge>
+                  <span className="text-[11px] text-muted">Updated {formatDate(product.updatedAt)}</span>
+                  <Link href={`/admin/products/${product.id}`} className={buttonClasses("ghost", "sm", "ml-auto")}>Review</Link>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-6 hidden overflow-x-auto border border-line bg-white md:block">
           <table className="w-full min-w-[46rem] text-left text-sm">
             <thead className="border-b border-line text-[10px] uppercase tracking-[0.12em] text-muted">
               <tr>
@@ -79,6 +101,7 @@ export default async function AdminProductsPage({ searchParams }: { searchParams
             </tbody>
           </table>
         </div>
+        </>
       ) : (
         <EmptyState className="mt-6" icon={<Package className="h-7 w-7" />} title="No products found" description="Try changing the filters." />
       )}

@@ -24,7 +24,7 @@ export async function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
-      <div className="container flex h-16 items-center gap-4">
+      <div className="container flex h-16 min-w-0 items-center gap-2 sm:gap-4">
         <Logo className="shrink-0" />
 
         <nav
@@ -52,10 +52,10 @@ export async function SiteHeader() {
           </Link>
         </nav>
 
-        <div className="ml-auto flex items-center gap-1">
+        <div className="ml-auto flex shrink-0 items-center gap-0.5 sm:gap-1">
           <Link
             href="/search"
-            className="flex h-10 w-10 items-center justify-center rounded-lg text-text-secondary transition-colors hover:bg-background-hover hover:text-text-primary"
+            className="hidden h-10 w-10 items-center justify-center rounded-lg text-text-secondary transition-colors hover:bg-background-hover hover:text-text-primary sm:flex"
             aria-label="Search furniture"
           >
             <Search className="h-[18px] w-[18px]" />

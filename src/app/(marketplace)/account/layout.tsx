@@ -19,14 +19,16 @@ export default async function AccountLayout({ children }: { children: React.Reac
   ];
 
   return (
-    <div className="container py-8 sm:py-10">
-      <div className="grid gap-6 lg:grid-cols-[14rem_1fr] lg:gap-10">
-        <aside>
-          <div className="rounded-xl border border-border bg-background p-4">
-            <p className="text-xs font-semibold uppercase tracking-wide text-primary">Account</p>
-            <p className="mt-1 text-base font-semibold">{user.name}</p>
-            <p className="mt-0.5 truncate text-xs text-text-secondary">{user.email}</p>
-            <div className="mt-4 border-t border-border pt-4">
+    <div className="container py-6 sm:py-10">
+      <div className="grid gap-5 lg:grid-cols-[14rem_1fr] lg:gap-10">
+        <aside className="min-w-0">
+          <div className="rounded-xl border border-border bg-background p-3 sm:p-4">
+            <div className="min-w-0">
+              <p className="text-xs font-semibold uppercase tracking-wide text-primary">Account</p>
+              <p className="mt-1 truncate text-base font-semibold">{user.name}</p>
+              <p className="mt-0.5 truncate text-xs text-text-secondary">{user.email}</p>
+            </div>
+            <div className="mt-3 border-t border-border pt-3 sm:mt-4 sm:pt-4">
               <DashboardNav items={items} />
             </div>
             {user.role === "seller" ? (

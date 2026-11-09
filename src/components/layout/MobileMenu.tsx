@@ -65,7 +65,7 @@ export function MobileMenu({
             onClick={() => setOpen(false)}
             aria-label="Close menu overlay"
           />
-          <div className="absolute inset-y-0 right-0 flex w-[88%] max-w-sm flex-col overflow-y-auto bg-background p-6 shadow-elevated">
+          <div className="absolute inset-y-0 right-0 flex w-full max-w-[22rem] flex-col overflow-y-auto bg-background p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] shadow-elevated sm:p-6">
             <div className="flex items-center justify-between">
               <Logo compact />
               <button

@@ -36,13 +36,29 @@ export default async function AdminAuditPage({ searchParams }: { searchParams: S
         <p className="mt-2 text-sm text-muted">Immutable record of administrative actions and security-relevant events.</p>
       </div>
 
-      <form method="get" className="mt-6 flex flex-wrap gap-2">
-        <input name="q" defaultValue={q} placeholder="Search action, actor or target" className="min-w-[15rem] flex-1 border border-line bg-white px-3 py-2 text-sm" />
-        <button type="submit" className={buttonClasses("outline", "sm")}>Search</button>
+      <form method="get" className="mt-6 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+        <input name="q" defaultValue={q} placeholder="Search action, actor or target" className="w-full border border-line bg-white px-3 py-2 text-sm sm:min-w-[15rem] sm:flex-1" />
+        <button type="submit" className={buttonClasses("outline", "sm", "justify-center")}>Search</button>
       </form>
 
       {items.length > 0 ? (
-        <div className="mt-6 overflow-x-auto border border-line bg-white">
+        <>
+          <div className="mt-6 space-y-3 md:hidden">
+            {items.map((entry) => (
+              <div key={String(entry._id)} className="border border-line bg-white p-4">
+                <div className="flex items-start justify-between gap-3">
+                  <p className="font-medium">{entry.action}</p>
+                  <span className="shrink-0 text-[11px] text-muted">{formatDateTime(entry.createdAt)}</span>
+                </div>
+                <p className="mt-1 text-xs text-muted">By {entry.actorEmail ?? "System"} · {entry.targetType}</p>
+                <p className="mt-1 break-all font-mono text-[10px] text-muted">{entry.targetId ?? "—"}</p>
+                {entry.metadata ? (
+                  <pre className="mt-2 whitespace-pre-wrap break-all font-mono text-[10px] text-muted">{JSON.stringify(entry.metadata)}</pre>
+                ) : null}
+              </div>
+            ))}
+          </div>
+          <div className="mt-6 hidden overflow-x-auto border border-line bg-white md:block">
           <table className="w-full min-w-[48rem] text-left text-sm">
             <thead className="border-b border-line text-[10px] uppercase tracking-[0.12em] text-muted">
               <tr>
@@ -74,6 +90,7 @@ export default async function AdminAuditPage({ searchParams }: { searchParams: S
             </tbody>
           </table>
         </div>
+        </>
       ) : (
         <EmptyState className="mt-6" icon={<ScrollText className="h-7 w-7" />} title="No audit entries" description="Administrative actions will be recorded here." />
       )}

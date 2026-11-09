@@ -14,7 +14,7 @@ export default async function AdminOverviewPage() {
   const maxOrders = Math.max(1, ...overview.trend.map((point) => point.orders));
 
   return (
-    <div className="container py-8">
+    <div>
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wide text-text-secondary">Platform health</p>
