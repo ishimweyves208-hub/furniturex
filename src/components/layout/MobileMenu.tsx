@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { Heart, Menu, Search, ShoppingBag, UserRound, X } from "lucide-react";
 import { Logo } from "@/components/layout/Logo";
@@ -51,7 +52,8 @@ export function MobileMenu({
         <Menu className="h-5 w-5" />
       </button>
 
-      {open ? (
+      {open
+        ? createPortal(
         <div
           id="mobile-menu"
           className="fixed inset-0 z-[70] lg:hidden"
@@ -184,7 +186,8 @@ export function MobileMenu({
               )}
             </div>
           </div>
-        </div>
+        </div>,
+        document.body,
       ) : null}
     </>
   );
